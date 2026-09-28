@@ -2,10 +2,7 @@ package ru.university.todo14.repository;
 
 import ru.university.todo14.model.Todo;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class TodoRepo {
 
@@ -35,5 +32,9 @@ public class TodoRepo {
 
     public Optional<Todo> getById(UUID id) {
         return Optional.ofNullable(data.get(id));
+    }
+
+    public List<Todo> getAll() {
+        return data.values().stream().toList();
     }
 }
