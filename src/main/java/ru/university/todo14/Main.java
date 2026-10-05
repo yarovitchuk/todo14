@@ -2,10 +2,14 @@ package ru.university.todo14;
 
 
 import ru.university.todo14.controller.CmdController;
+import ru.university.todo14.model.Todo;
 import ru.university.todo14.repository.TodoRepositoryInMemoryImpl;
 import ru.university.todo14.service.TodoService;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 
 /**
  * 1. Написать консольное приложение
@@ -16,7 +20,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        TodoRepositoryInMemoryImpl todoRepositoryInMemoryImpl = new TodoRepositoryInMemoryImpl();
+        Map<UUID, Todo> todoMap = new HashMap<>();
+        TodoRepositoryInMemoryImpl todoRepositoryInMemoryImpl = new TodoRepositoryInMemoryImpl(todoMap);
         TodoService todoService = new TodoService(todoRepositoryInMemoryImpl);
         Scanner scanner = new Scanner(System.in);
         CmdController cmdController = new CmdController(todoService, scanner);
