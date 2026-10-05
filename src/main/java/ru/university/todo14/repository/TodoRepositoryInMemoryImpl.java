@@ -4,15 +4,15 @@ import ru.university.todo14.model.Todo;
 
 import java.util.*;
 
-public class TodoRepo {
+public class TodoRepositoryInMemoryImpl implements TodoRepository {
 
     private final Map<UUID, Todo> data;
 
-    public TodoRepo() {
+    public TodoRepositoryInMemoryImpl() {
         this.data = new HashMap<>();
     }
 
-    public TodoRepo(Map<UUID, Todo> data) {
+    public TodoRepositoryInMemoryImpl(Map<UUID, Todo> data) {
         this.data = data;
     }
 

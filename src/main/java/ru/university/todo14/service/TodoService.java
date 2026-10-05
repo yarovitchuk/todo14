@@ -3,7 +3,7 @@ package ru.university.todo14.service;
 import ru.university.todo14.exception.TodoNotFoundException;
 import ru.university.todo14.exception.TodoTitleException;
 import ru.university.todo14.model.Todo;
-import ru.university.todo14.repository.TodoRepo;
+import ru.university.todo14.repository.TodoRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +11,10 @@ import java.util.UUID;
 
 public class TodoService {
 
-    private final TodoRepo todoRepo;
+    private final TodoRepository todoRepository;
 
-    public TodoService(TodoRepo todoRepo) {
-        this.todoRepo = todoRepo;
+    public TodoService(TodoRepository todoRepository) {
+        this.todoRepository = todoRepository;
     }
 
     public Todo create(Todo newTodo) {
@@ -22,7 +22,7 @@ public class TodoService {
             throw new TodoTitleException();
         }
 
-        return todoRepo.create(newTodo);
+        return todoRepository.create(newTodo);
     }
 
     public Todo update(Todo updatedTodo) {
@@ -30,22 +30,22 @@ public class TodoService {
             throw new TodoTitleException();
         }
 
-        return todoRepo.getById(updatedTodo.getId())
-                .map(_ -> todoRepo.update(updatedTodo))
-                .orElseThrow(TodoNotFoundException::new);
+        return todoRepository.getById(updatedTodo.getId())
+                .map(_ -> todoRepository.update(updatedTodo))
+                .orElseThrow(() -> new TodoNotFoundException(updatedTodo.getId()));
     }
 
     public void deleteById(UUID id) {
-        todoRepo.getById(id)
-                .map(_ -> todoRepo.delete(id))
-                .orElseThrow(TodoNotFoundException::new);
+        todoRepository.getById(id)
+                .map(_ -> todoRepository.delete(id))
+                .orElseThrow(() -> new TodoNotFoundException(id));
     }
 
     public Optional<Todo> getById(UUID id) {
-        return todoRepo.getById(id);
+        return todoRepository.getById(id);
     }
 
     public List<Todo> getAll() {
-        return todoRepo.getAll();
+        return todoRepository.getAll();
     }
 }
